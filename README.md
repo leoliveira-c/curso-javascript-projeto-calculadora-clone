@@ -8,3 +8,6 @@ Hoje foram feitos eventos de  clique e a criação do método addEventListenerAl
 
 Day 3
 Hoje foram feitos métodos de concatenação de números com operações com validações para que fosse analisado o que foi o ultimo elemento digitado pelo usuario, caso for digitado uma operação, a operação gera um novo espaço no array e se o proximo elemento digitado pelo usuario for um numero sera gerado mais um espaço no array, após feito isso o resultado da operação dos numeros digitados é exibido no display da calculadora.
+
+Day 4
+Hoje foram finalizadas as ações do botão de igual que tras o resultado da operação digitada pelo usuario e repetição da ultima operação+número digitado que ao clicar novamente no botão é repetida a ultima operação requerida, alem de ter sido corrigido alguns bugs com relação ao ponto que antes podia ser clicado mais de uma vez no mesmo numeral e ao ser clicado primeiramente trás o 0 a frente trazendo um número decimal e não mais um erro.
