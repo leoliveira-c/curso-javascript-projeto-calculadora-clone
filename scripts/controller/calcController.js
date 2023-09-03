@@ -12,6 +12,7 @@ class CalcController {
         this._currentDate;
         this.initialize();
         this.initButtonsEvents();
+        this.initKeyboard();
 
     }
 
@@ -27,6 +28,52 @@ class CalcController {
         }, 1000);
 
         this.setLastNumberToDisplay()
+
+    }
+
+    initKeyboard() {
+
+        document.addEventListener('keyup', e => {
+
+            switch (e.key) {
+
+                case 'Escape':
+                    this.clearAll();
+                    break;
+                case 'Backspace':
+                    this.clearEntry();
+                    break;
+                case '+':
+                case '-':
+                case '*':
+                case '/':
+                case '%':
+                    this.addOperation(e.key);
+                    break;
+                case 'Enter':
+                case '=':
+                    this.calc();
+                    break;
+                case '.':
+                case ',':
+                    this.addDot();
+                    break;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7 ':
+                case '8':
+                case '9':
+                    this.addOperation(parseInt(e.key));
+                    break;
+
+            }
+
+        });
 
     }
 
@@ -86,8 +133,15 @@ class CalcController {
     }
 
     getResult() {
+        try {
+            return eval(this._operation.join(""));
+        } catch (e) {
+            setTimeout(() => {
+                this.setError();
+            }, 10);
 
-        return eval(this._operation.join(""));
+        }
+
     }
 
     calc() {
@@ -163,7 +217,6 @@ class CalcController {
 
     }
 
-
     addOperation(value) {
 
         if (isNaN(this.getLastOperation())) {
@@ -172,7 +225,7 @@ class CalcController {
 
                 this.setLastOperation(value);
 
-            }  else {
+            } else {
 
                 this.pushOperation(value);
                 this.setLastNumberToDisplay()
@@ -204,14 +257,14 @@ class CalcController {
         this.displayCalc = "Error";
     }
 
-    addDot(){
+    addDot() {
 
         let lastOperation = this.getLastOperation()
 
-        if(typeof lastOperation === 'string' && lastOperation.split('').indexOf('.') > -1) return;
+        if (typeof lastOperation === 'string' && lastOperation.split('').indexOf('.') > -1) return;
 
 
-        if(this.isOperator(lastOperation) || !lastOperation) {
+        if (this.isOperator(lastOperation) || !lastOperation) {
             this.pushOperation('0.')
 
         } else {
@@ -279,7 +332,6 @@ class CalcController {
         }
     }
 
-
     //evento de clique dos botões
     initButtonsEvents() {
 
@@ -304,9 +356,7 @@ class CalcController {
 
     }
 
-
     setDisplayDateTime() {
-
 
         this.displayDate = this.currentDate.toLocaleDateString(this._locale, {
             day: "2-digit",
@@ -346,6 +396,11 @@ class CalcController {
     }
 
     set displayCalc(value) {
+
+        if (value.toString().length > 10) {
+            this.setError()
+            return false;
+        }
         this._displayCalcEl.innerHTML = value;
     }
 
